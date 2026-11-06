@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Andrey S — 3D просмотр</title>
+<link rel="icon" type="image/png" href="favicon.png">
+<meta property="og:title" content="Andrey S — 3D просмотр">
+<meta property="og:description" content="3D-модель лестницы, расчёт и чертежи">
+<meta property="og:image" content="logo.jpg">
+<meta property="og:type" content="website">
+<link rel="stylesheet" href="style.css?v=e515d5e2">
+<style id="client-mode">
+  #btnOrder, #btnTechCard, #btnAdminCost { display: none !important; }
+</style>
+</head>
+<body>
+
+<!-- ═══ ВАШ HTML КОД ═══ -->
+<canvas id="canvas"></canvas>
+
+<header class="brand">
+  <div class="logo">◈</div>
+  <div>
+    <h1>Andrey S</h1>
+    <p>3D просмотр</p>
+  </div>
+</header>
+
+<button class="panel-toggle" id="panelToggle" title="Настройки" aria-label="Настройки">⚙</button>
+
+<aside class="panel hidden" id="panel">
+
+  <button class="btn primary big" id="btnPrice" style="display:none;">
+    <span class="ico">💰</span> Детали расчёта
+  </button>
+
+  <button class="btn big" id="btnOrder" style="display:none;">
+    <span class="ico">📄</span> Бланк заказа
+  </button>
+
+  <button class="btn big" id="btnTechCard">
+    <span class="ico">🧾</span> Технологическая карта
+  </button>
+
+  <button class="btn big" id="btnAdminCost">
+    <span class="ico">⚙️</span> Админка цен
+  </button>
+
+     <!-- ═══ Настройки просмотра ═══ -->
+  <div class="acc" id="accView">
+    <button class="acc-header" type="button">
+      <span><span class="ico">👁</span> Конфигуратор</span>
+      <span class="arrow">▶</span>
+    </button>
+    <div class="acc-body">
+
+      <!-- Лестница 1→2 -->
+      <div class="view-group">
+        <div class="view-group-title">Лестница 1→2</div>
+        <div class="row">
+          <button class="btn active" id="el_s1_treads"><span class="ico">🪵</span> Ступени</button>
+          <button class="btn active" id="el_s1_risers"><span class="ico">📐</span> Подступ.</button>
+        </div>
+        <div class="row">
+          <button class="btn active" id="el_s1_stringers"><span class="ico">🏗</span> Тетивы</button>
+          <button class="btn active" id="el_s1_kosour"><span class="ico">📏</span> Косоуры</button>
+        </div>
+        <div class="row">
+          <button class="btn active" id="el_s1_welcome_steps"><span class="ico">🌀</span> Пригл. ст.</button>
+          <button class="btn active" id="el_s1_welcome_risers"><span class="ico">🌀</span> Пригл. пд.</button>
+        </div>
+        <div class="row">
+          <button class="btn active" id="el_s1_handrail"><span class="ico">➖</span> Поручень</button>
+          <button class="btn active" id="el_s1_baluster"><span class="ico">🪜</span> Балясины</button>
+        </div>
+        <div class="row">
+          <button class="btn active" id="el_s1_posts"><span class="ico">🏛</span> Столбы</button>
+        </div>
+        <div class="row" id="container_s1_covering"></div>
+      </div>
+      <button class="btn active" id="el_s1_covering"><span class="ico">📏</span> Панель</button>
+      <!-- Лестница 2→3 -->
+      <div class="view-group">
+        <div class="view-group-title">Лестница 2→3</div>
+        <div class="row">
+          <button class="btn active" id="el_s2_treads"><span class="ico">🪵</span> Ступени</button>
+          <button class="btn active" id="el_s2_risers"><span class="ico">📐</span> Подступ.</button>
+        </div>
+        <div class="row">
+          <button class="btn active" id="el_s2_stringers"><span class="ico">🏗</span> Тетивы</button>
+          <button class="btn active" id="el_s2_kosour"><span class="ico">📏</span> Косоуры</button>
+        </div>
+        <div class="row">
+          <button class="btn active" id="el_s2_welcome_steps"><span class="ico">🌀</span> Пригл. ст.</button>
+          <button class="btn active" id="el_s2_welcome_risers"><span class="ico">🌀</span> Пригл. пд.</button>
+        </div>
+        <div class="row">
+          <button class="btn active" id="el_s2_handrail"><span class="ico">➖</span> Поручень</button>
+          <button class="btn active" id="el_s2_baluster"><span class="ico">🪜</span> Балясины</button>
+        </div>
+        <div class="row">
+          <button class="btn active" id="el_s2_posts"><span class="ico">🏛</span> Столбы</button>
+        </div>
+        <button class="btn active" id="el_s2_covering"><span class="ico">📏</span> Панель</button>
+      </div>
+
+      <!-- Ограждение 2 этажа -->
+      <div class="view-group">
+        <div class="view-group-title">Ограждение 2 этажа</div>
+        <div class="row">
+          <button class="btn active" id="el_r2_posts"><span class="ico">🏛</span> Столбы</button>
+          <button class="btn active" id="el_r2_handrail"><span class="ico">➖</span> Поручень</button>
+        </div>
+        <div class="row">
+          <button class="btn active" id="el_r2_bottomrail"><span class="ico">🪵</span> Подбаляс.</button>
+          <button class="btn active" id="el_r2_baluster"><span class="ico">🪜</span> Балясины</button>
+        </div>
+      </div>
+
+      <!-- Ограждение 3 этажа -->
+      <div class="view-group">
+        <div class="view-group-title">Ограждение 3 этажа</div>
+        <div class="row">
+          <button class="btn active" id="el_r3_posts"><span class="ico">🏛</span> Столбы</button>
+          <button class="btn active" id="el_r3_handrail"><span class="ico">➖</span> Поручень</button>
+        </div>
+        <div class="row">
+          <button class="btn active" id="el_r3_bottomrail"><span class="ico">🪵</span> Подбаляс.</button>
+          <button class="btn active" id="el_r3_baluster"><span class="ico">🪜</span> Балясины</button>
+        </div>
+      </div>
+
+      <!-- Прочее -->
+      <div class="view-group">
+        <div class="view-group-title">Прочее</div>
+        <div class="row">
+          <button class="btn active" id="el_wall"><span class="ico">🧱</span> Стена</button>
+          <button class="btn active" id="el_opening"><span class="ico">🪟</span> Проём</button>
+          <button class="btn active" id="el_floor"><span class="ico">🌳</span> Пол</button>
+        </div>
+        <div class="row">
+          <button class="btn active" id="btnGlass"><span class="ico">◇</span> Стекло</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══ Измерить ═══ -->
+  <div class="acc" id="accTools">
+    <button class="acc-header" type="button">
+      <span><span class="ico">📏</span> Измерить</span>
+      <span class="arrow">▶</span>
+    </button>
+         <div class="acc-body">
+      <div class="row">
+        <button class="btn" id="btnRuler"><span class="ico">📏</span> Линейка</button>
+        <button class="btn" id="btnRulerClear"><span class="ico">✕</span> Очистить</button>
+      </div>
+      <div class="row">
+        <button class="btn" id="btnHuman"><span class="ico">🧍</span> Человечек</button>
+        <button class="btn" id="btnHumanRemove"><span class="ico">✕</span> Убрать</button>
+      </div>
+                 <div class="row">
+        <button class="btn" id="btnShowOpeningDims"><span class="ico">📐</span> Размеры проёма</button>
+      </div>
+      <div class="slider-row">
+        <div class="slider-label"><span>Рост человека</span><b id="heightValue">185 см</b></div>
+        <input type="range" id="heightSlider" class="heightSlider" min="165" max="195" step="5" value="185">
+      </div>
+      <div class="slider-row">
+        <div class="slider-label"><span>Поворот человека</span><b id="rotationValue">0°</b></div>
+        <input type="range" id="rotationSlider" class="heightSlider" min="0" max="360" step="15" value="0">
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ Текстуры ═══ -->
+  <div class="acc" id="accWood">
+    <button class="acc-header" type="button">
+      <span><span class="ico">🪵</span> Выбор дерева</span>
+      <span class="arrow">▶</span>
+    </button>
+    <div class="acc-body">
+      <div id="finishRows"></div>
+      <div class="panel-note">«Как в проекте» — текстура из StairCon, включая тонировку. Выбор дерева заменяет текстуру.</div>
+    </div>
+  </div>
+    <!-- ═══ Балясины ═══ -->
+  <div class="acc" id="accBaluster">
+    <button class="acc-header" type="button">
+      <span><span class="ico">🪜</span> Форма балясин</span>
+      <span class="arrow">▶</span>
+    </button>
+    <div class="acc-body">
+      <div class="row" id="balusterButtons" style="flex-wrap: wrap; gap: 8px;"></div>
+    </div>
+  </div>
+  <!-- ═══ Покраска ═══ -->
+  <div class="acc" id="accPaint">
+    <button class="acc-header" type="button">
+      <span><span class="ico">🎨</span> Покраска</span>
+      <span class="arrow">▶</span>
+    </button>
+    <div class="acc-body">
+      <button class="btn active" id="btnGlobalPaint">Покраска включена</button>
+      <div id="colorRows"></div>
+      <div class="panel-note">Покраска накладывается на выбранное дерево. Если в проекте уже была тонировка, сначала выберите дерево — иначе тон может усилиться.</div>
+    </div>
+  </div>
+  <!-- ═══ Параметры лестницы ═══ -->
+  <button class="btn big" id="btnParams">
+    <span class="ico">📐</span> Параметры лестницы
+  </button>
+
+  <!-- ═══ Чертежи ═══ -->
+  <button class="btn big" id="btnDrawings">
+    <span class="ico">📐</span> Чертежи
+  </button>
+
+  <!-- ═══ Сохранить позицию ═══ -->
+  <button class="btn big" id="btnSavePos">
+    <span class="ico">💾</span> Сохранить позицию
+  </button>
+
+  <div class="divider"></div>
+
+  <div class="row">
+    <button class="btn" id="btnFit"><span class="ico">⛶</span> Вписать</button>
+    <button class="btn" id="btnRotate"><span class="ico">⟳</span> Вращение</button>
+  </div>
+
+  <div class="row">
+    <button class="btn" id="btnShot"><span class="ico">📷</span> Снимок</button>
+    <button class="btn" id="btnShare"><span class="ico">🔗</span> Поделиться</button>
+  </div>
+
+  <button class="btn" id="btnReset"><span class="ico">↺</span> Сброс</button>
+
+  <label class="color-row">
+    <span>Цвет фона</span>
+    <input type="color" id="bgColor" value="#0f1116">
+  </label>
+
+</aside>
+
+<!-- ═══ Логотип вместо данных модели ═══ -->
+<div class="info logo-panel" id="info">
+  <img src="logo.jpg" alt="Липариус" class="brand-logo">
+  <div class="info-data" style="display:none">
+    <div class="info-head">Модель</div>
+    <div class="info-row"><span>Файл</span><b id="iFile">—</b></div>
+    <div class="info-row"><span>Объектов</span><b id="iMeshes">0</b></div>
+    <div class="info-row"><span>Вершин</span><b id="iVerts">0</b></div>
+    <div class="info-row"><span>Треугольников</span><b id="iTris">0</b></div>
+    <div class="info-row"><span>Габариты</span><b id="iSize">—</b></div>
+    <div class="info-row" id="animRow" style="display:none"><span>Анимаций</span><b id="iAnims">0</b></div>
+  </div>
+</div>
+
+<!-- ═══ Загрузка ═══ -->
+<div class="loading" id="loading">
+  <div>
+    <div class="spinner"></div>
+    <p id="loadingText">Загрузка модели…</p>
+  </div>
+</div>
+
+<div class="progress" id="progress"><div class="progress-bar" id="progressBar"></div></div>
+
+<!-- ═══ Подсказки ═══ -->
+<div class="mode-hint ruler" id="rulerHint">📏 Режим линейки: тапните по двум точкам модели</div>
+<div class="mode-hint human" id="humanHint">🧍 Поставьте человечка на ступень</div>
+
+<!-- ═══ Плавающая плашка — Линейка ═══ -->
+<div class="float-bar" id="floatRuler">
+  <span class="fb-label">📏 Линейка активна</span>
+  <button class="btn fb-off" id="floatRulerOff">Отключить</button>
+</div>
+
+<!-- ═══ Плавающая плашка — Человечек ═══ -->
+<div class="float-bar" id="floatHuman">
+  <span class="fb-label">🧍 Человечек</span>
+  <div class="fb-slider">
+    <span>Рост</span>
+    <input type="range" id="floatHeightSlider" class="heightSlider" min="165" max="195" step="5" value="185">
+    <b id="floatHeightValue">185 см</b>
+  </div>
+  <div class="fb-slider">
+    <span>Поворот</span>
+    <input type="range" id="floatRotationSlider" class="heightSlider" min="0" max="360" step="15" value="0">
+    <b id="floatRotationValue">0°</b>
+  </div>
+  <button class="btn fb-off" id="floatHumanOff">Отключить</button>
+</div>
+
+<!-- ═══ Toast ═══ -->
+<div class="toast" id="toast"></div>
+
+<!-- ═══ Модальное окно: Детали расчёта ═══ -->
+<div class="modal-overlay" id="priceModalOverlay">
+  <div class="modal">
+    <div class="modal-header">
+      <div>
+        <span class="title">💰 Детали расчёта</span>
+        <span class="subtitle" id="priceModalSubtitle">—</span>
+      </div>
+      <button class="modal-close" id="priceModalClose" aria-label="Закрыть">✕</button>
+    </div>
+    <div class="modal-body" id="priceModalBody"></div>
+    <div class="modal-footer">
+      <button class="btn" id="priceModalCloseBtn">Закрыть</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ Модальное окно: Параметры лестницы ═══ -->
+<div class="modal-overlay" id="paramsModalOverlay">
+  <div class="modal">
+    <div class="modal-header">
+      <div>
+        <span class="title">📐 Параметры лестницы</span>
+        <span class="subtitle" id="paramsModalSubtitle">—</span>
+      </div>
+      <button class="modal-close" id="paramsModalClose" aria-label="Закрыть">✕</button>
+    </div>
+    <div class="modal-body" id="paramsModalBody"></div>
+    <div class="modal-footer">
+      <button class="btn" id="paramsModalCloseBtn">Закрыть</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ Модальное окно: Чертежи ═══ -->
+<div class="modal-overlay" id="drawingsModalOverlay">
+  <div class="modal" style="max-width:1000px;width:96vw;">
+    <div class="modal-header">
+      <div>
+        <span class="title">📐 Чертежи</span>
+        <span class="subtitle" id="drawingsModalSubtitle">Вид сверху и официальный PDF</span>
+      </div>
+      <button class="modal-close" id="drawingsModalClose" aria-label="Закрыть">✕</button>
+    </div>
+    <div class="modal-body" id="drawingsModalBody"></div>
+    <div class="modal-footer">
+      <button class="btn" id="drawingsModalCloseBtn">Закрыть</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ Модальное окно: Бланк заказа ═══ -->
+<div class="modal-overlay" id="orderModalOverlay">
+  <div class="modal">
+    <div class="modal-header">
+      <div>
+        <span class="title">📄 Бланк заказа</span>
+        <span class="subtitle" id="orderModalSubtitle">—</span>
+      </div>
+      <button class="modal-close" id="orderModalClose" aria-label="Закрыть">✕</button>
+    </div>
+    <div class="modal-body" id="orderModalBody"></div>
+    <div class="modal-footer">
+      <button class="btn" id="orderDownload">📥 Скачать PDF</button>
+      <button class="btn primary" id="orderShare">🔗 Поделиться</button>
+      <button class="btn" id="orderModalCloseBtn">Закрыть</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ Модальное окно: Техкарта производства ═══ -->
+<div class="modal-overlay" id="techCardOverlay">
+  <div class="modal" style="max-width:1180px;width:96vw;">
+    <div class="modal-header">
+      <div>
+        <span class="title">🧾 Технологическая карта</span>
+        <span class="subtitle">Данные для закупки и изготовления</span>
+      </div>
+      <button class="modal-close" id="techCardClose" aria-label="Закрыть">✕</button>
+    </div>
+    <div class="modal-body" id="techCardBody"></div>
+    <div class="modal-footer">
+      <button class="btn" id="techCardRefresh">↻ Пересчитать</button>
+      <button class="btn" id="techCardCloseBtn">Закрыть</button>
+    </div>
+  </div>
+</div>
+
+<input type="file" id="fileInput" multiple
+       accept=".dae,.xml,image/*,.jpg,.jpeg,.png,.gif,.bmp,.tga,.webp"
+       style="display:none">
+<!-- ═══════════════════ -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
+
+<script type="module" src="app.js?v=e515d5e2"></script>
+</body>
+</html>

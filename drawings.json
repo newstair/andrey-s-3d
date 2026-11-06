@@ -1,0 +1,48 @@
+{
+  "pdf": [
+    {
+      "name": "Andrey S.pdf",
+      "url": "Andrey%20S.pdf"
+    }
+  ],
+  "dxf": [
+    {
+      "name": "Andrey S.DXF",
+      "url": "Andrey%20S.DXF",
+      "views": [
+        {
+          "name": "Все слои",
+          "url": "drawing-254.svg"
+        },
+        {
+          "name": "Этаж_1",
+          "url": "drawing-254-1.svg"
+        },
+        {
+          "name": "Этаж_1_LeftElev",
+          "url": "drawing-254-2.svg"
+        },
+        {
+          "name": "Этаж_1_RightElev",
+          "url": "drawing-254-3.svg"
+        },
+        {
+          "name": "Этаж_1_RightElevDIMLINES",
+          "url": "drawing-254-4.svg"
+        },
+        {
+          "name": "Этаж_1DIMLINES",
+          "url": "drawing-254-5.svg"
+        },
+        {
+          "name": "Этаж_2",
+          "url": "drawing-254-6.svg"
+        },
+        {
+          "name": "Этаж_2_FloorRail",
+          "url": "drawing-254-7.svg"
+        }
+      ]
+    }
+  ]
+}

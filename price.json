@@ -1,0 +1,83 @@
+{
+  "materials": {
+    "pine":  { "name": "Сосна", "textures": ["con_pine.bmp"] },
+    "beech": { "name": "Бук",   "textures": ["con_bok.bmp"] },
+    "ash":   { "name": "Ясень", "textures": ["con_ash.bmp"] },
+    "oak":   { "name": "Дуб",   "textures": ["con_oak.bmp"] }
+  },
+  "categories": {
+    "treads": {
+      "name": "Ступени", "method": "m2", "coef": 1.06,
+      "prices": { "pine": 10300, "beech": 19492, "ash": 28960, "oak": 34626 }
+    },
+    "risers": {
+      "name": "Подступенки", "method": "m2", "coef": 1.25,
+      "prices": { "pine": 10300, "beech": 18544, "ash": 2946, "oak": 35000 }
+    },
+    "stringers": {
+      "name": "Тетивы", "method": "m2", "coef": 1.19,
+      "prices": { "pine": 7800, "beech": 18000, "ash": 26000, "oak": 35000 }
+    },
+    "kosour": {
+      "name": "Косоуры", "method": "m2", "coef": 1.19,
+      "prices": { "pine": 8500, "beech": 19000, "ash": 27000, "oak": 36000 }
+    },
+    "welcome_steps": {
+      "name": "Пригласительные ступени", "method": "count",
+      "prices": { "pine": 2500, "beech": 2500, "ash": 2500, "oak":2500 }
+    },
+    "welcome_risers": {
+      "name": "Пригласительные подступенки", "method": "count",
+      "prices": { "pine": 4000, "beech": 4000, "ash": 4000, "oak": 4000 }
+    },
+    "handrail": {
+      "name": "Поручень", "method": "m2", "coef": 2.29,
+      "prices": { "pine": 6500, "beech": 18000, "ash": 26000, "oak": 35000 }
+    },
+    "posts": {
+      "name": "Столбы", "method": "length", "extra_mm": 100,
+      "prices": { "pine": 3622, "beech": 4709, "ash": 5636, "oak": 6207 }
+    },
+    "baluster": {
+      "name": "Балясины", "method": "count",
+      "prices": { "pine": 650, "beech": 1100, "ash": 1300, "oak": 1800 }
+    },
+    "covering": {
+      "name": "Панель перекрытия", "method": "m2", "coef": 1.0,
+      "prices": { "pine": 10650, "beech": 18000, "ash": 26000, "oak": 35000 }
+    }
+  },
+    "paints": {
+    "none":    { "name": "Без покраски",  "price_m2": 0 },
+    "clear":   { "name": "Лак б/ц",       "price_m2": 1500 },
+    "light":   { "name": "Светлый дуб",   "price_m2": 1700 },
+    "dark":    { "name": "Тёмный орех",   "price_m2": 1900 },
+    "redwood": { "name": "Красное дерево","price_m2": 1800 },
+    "mocha":   { "name": "Мокко",         "price_m2": 1800 },
+    "wenge":   { "name": "Венге",         "price_m2": 1800 },
+    "honey":   { "name": "Медовый",       "price_m2": 1800 },
+    "ash":     { "name": "Ясень",         "price_m2": 1800 },
+    "black":   { "name": "Черный",        "price_m2": 1800 },
+    "gray":    { "name": "Серый",         "price_m2": 1900 },
+    "white":   { "name": "Белый",         "price_m2": 1700 }
+ },
+   "baluster_pricing_note": "Цена балясины = baluster_prices[высота][материал] + baluster_types[рисунок].extra_cost. Если для рисунка нужна своя цена, заполните baluster_matrix[рисунок][высота][материал] — она заменит сумму. null или 0 = использовать базовую цену categories.baluster + надбавку за рисунок.",
+  "baluster_sizes": {
+    "680": { "name": "680 мм", "usage": "Тетивная лестница, угол больше 40°" },
+    "860": { "name": "860 мм", "usage": "Ограждение верхнего проёма" },
+    "930": { "name": "930 мм", "usage": "Косоурная лестница или пологая тетива" }
+  },
+  "baluster_prices": {
+    "680": { "pine": null, "beech": null, "ash": null, "oak": null },
+    "860": { "pine": null, "beech": null, "ash": null, "oak": null },
+    "930": { "pine": null, "beech": null, "ash": null, "oak": null }
+  },
+  "baluster_matrix": {},
+   "baluster_types": {
+    "1": { "name": "Вид 1", "extra_cost": 0 },
+    "2": { "name": "Вид 2", "extra_cost": 100 },
+    "3": { "name": "Вид 3", "extra_cost": 150 },
+    "4": { "name": "Вид 4", "extra_cost": 150 },
+    "5": { "name": "Вид 5", "extra_cost": 200 }
+  }
+}
